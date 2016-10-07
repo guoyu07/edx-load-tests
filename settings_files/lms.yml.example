@@ -24,4 +24,4 @@ LOCUST_MAX_WAIT: 15000
 # Use the following keys to optionally specify basic auth credentials to
 # access the target:
 #BASIC_AUTH_USER:
-#BASIC_AUTH_PASS:
+#BASIC_AUTH_PASSWORD:
