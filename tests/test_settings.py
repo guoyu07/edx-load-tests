@@ -6,9 +6,9 @@ import helpers.settings as settings
 def test_suggests_secret():
     assert not settings._suggests_secret('foo')
     assert not settings._suggests_secret('foo_bar')
-    assert not settings._suggests_secret('foo_secret')
-    assert not settings._suggests_secret('foo_password')
-    assert not settings._suggests_secret('FOO_PASSWORD')
+    assert settings._suggests_secret('foo_secret')
+    assert settings._suggests_secret('foo_password')
+    assert settings._suggests_secret('FOO_PASSWORD')
 
 
 def test_get_redacted_data():
