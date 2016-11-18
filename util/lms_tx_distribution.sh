@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Get the latest transaction distribution for the LMS load test.  This script
-# tested using GNU coreutils and mawk (the default awk on Debian/Ubuntu).
+# tested using GNU coreutils and many versions of awk.
 #
 # Instructions:
 #
@@ -35,7 +35,7 @@ data_only_count=$(cut -d, -f1,$COUNT_FIELD)
 data_fix_xb_handlers=$(echo "$data_only_count" | sed 's|^/XBlock/Handler|/courseware.module_render:XBlock/Handler|')
 
 # group transactions by module
-data_grouped_by_module=$(echo "$data_fix_xb_handlers" | mawk -F, '
+data_grouped_by_module=$(echo "$data_fix_xb_handlers" | awk -F, '
     BEGIN { OFS="," }
     NR==1 { print }
     NR>1 { split($1, parts, ":"); name = parts[1]; a[name] += $2 }
@@ -43,7 +43,7 @@ data_grouped_by_module=$(echo "$data_fix_xb_handlers" | mawk -F, '
 ')
 
 # convert raw transaction counts to percentages of the overall total
-data_percentages=$(echo "$data_grouped_by_module" | mawk -F, '
+data_percentages=$(echo "$data_grouped_by_module" | awk -F, '
     BEGIN { OFS="," }
     NR==1 { total = $2 }
     NR>1 { p = ($2/total)*100; printf "%s, %.2f%%\n", $1, p }
